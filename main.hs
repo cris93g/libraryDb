@@ -19,7 +19,13 @@ books dBase findPerson =
 -- borrowers :: Database -> Book -> [Person]
 -- borrowed :: Database -> Book -> Bool
 -- numBorrowed :: Database -> Person -> Int
--- makeLoan :: Database -> Person -> Book -> Database
--- returnLoan :: Database -> Person -> Book -> Database
+makeLoan :: Database -> Person -> Book -> Database
+makeLoan dBase person book =
+  [(person, book)] ++ dBase
+
+returnLoan :: Database -> Person -> Book -> Database
+returnLoan dBase person book =
+  [pair | pair <- dBase, pair /= (person, book)]
+
 main :: IO ()
 main = print $ books exampleBase "Alice"
